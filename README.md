@@ -24,3 +24,5 @@ For a freelance client or a startup founder, this project demonstrates:
 
 ---
 *Built with passion by [negix48](https://github.com/negix48)*
+
+npx serve -p 3001 .

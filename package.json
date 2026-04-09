@@ -1,0 +1,17 @@
+{
+  "name": "port",
+  "version": "1.0.0",
+  "description": "> [!NOTE] > This is a high-end, immersive digital experience designed to showcase technical personality and bridge the gap between \"products\" and \"brands.\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.5.2"
+  }
+}

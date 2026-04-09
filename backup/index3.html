@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sayanth Satheesh · DevOps & MCA Student</title>
+        <!-- Google Fonts: Inter -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;700&display=swap"
+                rel="stylesheet">
+        <!-- External CSS -->
+        <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+        <!-- Preloader & Curtain Reveal -->
+        <!-- Cinematic Preloader -->
+        <div class="cinematic-loader" id="loader">
+                <div class="loader-panel panel-top"></div>
+                <div class="loader-panel panel-bottom"></div>
+                <div class="loader-inner">
+                        <div class="count-wrapper">
+                                <span class="count-number" id="count">0</span>
+                                <div class="count-status" id="status">INITIALIZING</div>
+                        </div>
+                </div>
+        </div>
+
+        <div class="noise-overlay"></div>
+        <nav class="navbar">
+                <div class="nav-container">
+                        <div class="nav-links">
+                                <a href="#home" class="active">Home</a>
+                                <a href="#skills">Skills</a>
+                                <a href="#projects">Projects</a>
+                                <a href="#contact">Contact</a>
+                        </div>
+                </div>
+        </nav>
+        <main>
+                <!-- HERO -->
+                <section id="home" class="hero fade-section">
+                        <div class="hero-bg-text">SAYANTH</div>
+
+                        <div class="hero-background-svg">
+                                <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+                                        <path class="svg-line-anim"
+                                                d="M100,500 L700,100 M100,100 C 300,50 500,50 700,500"
+                                                stroke="var(--accent)" stroke-width="1.5" fill="none" opacity="0.15" />
+                                        <circle cx="700" cy="100" r="10" stroke="var(--accent)" stroke-width="1.5"
+                                                fill="none" opacity="0.15" class="svg-line-anim-delayed" />
+                                </svg>
+                        </div>
+                        <div class="hero-content">
+                                <h1 class="hero-heading"><span class="hero-line"><span>Sayanth</span></span><span
+                                                class="hero-line"><span>Satheesh</span></span></h1>
+                                <div class="devops-line" id="typed-phrase"></div>
+                                <p class="hero-sub">Specializing in Cloud Infrastructure, Full‑Stack Web Dev, and
+                                        High‑Availability
+                                        Architecture.</p>
+                                <div class="hero-actions">
+                                        <a href="#" class="social-btn github"><svg viewBox="0 0 24 24">
+                                                        <path
+                                                                d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.03-2.682-.103-.253-.447-1.27.098-2.646 0 0 .84-.269 2.75 1.025.8-.223 1.65-.334 2.5-.334.85 0 1.7.111 2.5.334 1.91-1.294 2.75-1.025 2.75-1.025.545 1.376.201 2.393.099 2.646.64.698 1.03 1.591 1.03 2.682 0 3.841-2.337 4.687-4.565 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                                                </svg></a>
+                                        <a href="#" class="social-btn linkedin"><svg viewBox="0 0 24 24">
+                                                        <path
+                                                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451c.979 0 1.771-.773 1.771-1.729V1.729C24 .774 23.204 0 22.225 0z" />
+                                                </svg></a>
+                                        <a href="#" class="social-btn instagram"><svg viewBox="0 0 24 24">
+                                                        <path
+                                                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z" />
+                                                </svg></a>
+                                </div>
+                                <div class="hero-stats">
+                                        <div class="stat-item"><span class="stat-number">3+</span><span
+                                                        class="stat-label">Years of
+                                                        Exp</span></div>
+                                        <div class="stat-item"><span class="stat-number">10+</span><span
+                                                        class="stat-label">Projects</span>
+                                        </div>
+                                        <div class="stat-item"><span class="stat-number">10K+</span><span
+                                                        class="stat-label">Hours
+                                                        Coded</span></div>
+                                </div>
+                        </div>
+                </section>
+
+                <!-- SKILLS -->
+                <section id="skills" class="skills fade-section">
+                        <div class="container">
+                                <h2 class="section-title">
+                                        Technical Arsenal
+                                        <svg class="spin-accent" viewBox="0 0 100 100"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M50,0 C60,20 80,40 100,50 C80,60 60,80 50,100 C40,80 20,60 0,50 C20,40 40,20 50,0 Z"
+                                                        fill="var(--accent)" opacity="0.3" />
+                                        </svg>
+                                </h2>
+                                <div class="bento-grid">
+                                        <div class="bento-item">
+                                                <h3>Core Languages</h3>
+                                                <ul>
+                                                        <li>Python</li>
+                                                        <li>JavaScript</li>
+                                                        <li>SQL</li>
+                                                        <li>HTML5</li>
+                                                </ul>
+                                        </div>
+                                        <div class="bento-item">
+                                                <h3>Data & Analytics</h3>
+                                                <ul>
+                                                        <li>Pandas</li>
+                                                        <li>yfinance</li>
+                                                </ul>
+                                        </div>
+                                        <div class="bento-item">
+                                                <h3>Frontend & UI</h3>
+                                                <ul>
+                                                        <li>React</li>
+                                                        <li>Streamlit</li>
+                                                </ul>
+                                        </div>
+                                        <div class="bento-item">
+                                                <h3>Backend & Cloud/DevOps</h3>
+                                                <ul>
+                                                        <li>Flask</li>
+                                                        <li>Docker</li>
+                                                        <li>Jenkins</li>
+                                                        <li>Prometheus</li>
+                                                        <li>MySQL</li>
+                                                </ul>
+                                        </div>
+                                </div>
+                                <!-- marquee -->
+                                <div class="marquee-wrapper">
+                                        <div class="marquee">
+                                                <div class="marquee-content">
+                                                        <div class="marquee-item item-python"><img src="https://cdn.simpleicons.org/python/3776AB" alt="Python" /><span>Python</span></div>
+                                                        <div class="marquee-item item-docker"><img src="https://cdn.simpleicons.org/docker/2496ED" alt="Docker" /><span>Docker</span></div>
+                                                        <div class="marquee-item item-jenkins"><img src="https://cdn.simpleicons.org/jenkins/D24939" alt="Jenkins" /><span>Jenkins</span></div>
+                                                        <div class="marquee-item item-prometheus"><img src="https://cdn.simpleicons.org/prometheus/E6522C" alt="Prometheus" /><span>Prometheus</span></div>
+                                                        <div class="marquee-item item-github"><img src="https://cdn.simpleicons.org/github/white" alt="GitHub" /><span>GitHub</span></div>
+                                                        <div class="marquee-item item-githubactions"><img src="https://cdn.simpleicons.org/githubactions/2088FF" alt="GitHub Actions" /><span>GitHub Actions</span></div>
+                                                        <div class="marquee-item item-html5"><img src="https://cdn.simpleicons.org/html5/E34F26" alt="HTML5" /><span>HTML5</span></div>
+                                                        <div class="marquee-item item-css3"><img src="https://cdn.simpleicons.org/css3/1572B6" alt="CSS3" /><span>CSS3</span></div>
+                                                        <div class="marquee-item item-react"><img src="https://cdn.simpleicons.org/react/61DAFB" alt="React" /><span>React</span></div>
+                                                        <div class="marquee-item item-nextdotjs"><img src="https://cdn.simpleicons.org/nextdotjs/white" alt="Next.js" /><span>Next.js</span></div>
+                                                        <div class="marquee-item item-pandas"><img src="https://cdn.simpleicons.org/pandas/150458" alt="Pandas" /><span>Pandas</span></div>
+                                                </div>
+                                                <div class="marquee-content" aria-hidden="true">
+                                                        <div class="marquee-item item-python"><img src="https://cdn.simpleicons.org/python/3776AB" alt="Python" /><span>Python</span></div>
+                                                        <div class="marquee-item item-docker"><img src="https://cdn.simpleicons.org/docker/2496ED" alt="Docker" /><span>Docker</span></div>
+                                                        <div class="marquee-item item-jenkins"><img src="https://cdn.simpleicons.org/jenkins/D24939" alt="Jenkins" /><span>Jenkins</span></div>
+                                                        <div class="marquee-item item-prometheus"><img src="https://cdn.simpleicons.org/prometheus/E6522C" alt="Prometheus" /><span>Prometheus</span></div>
+                                                        <div class="marquee-item item-github"><img src="https://cdn.simpleicons.org/github/white" alt="GitHub" /><span>GitHub</span></div>
+                                                        <div class="marquee-item item-githubactions"><img src="https://cdn.simpleicons.org/githubactions/2088FF" alt="GitHub Actions" /><span>GitHub Actions</span></div>
+                                                        <div class="marquee-item item-html5"><img src="https://cdn.simpleicons.org/html5/E34F26" alt="HTML5" /><span>HTML5</span></div>
+                                                        <div class="marquee-item item-css3"><img src="https://cdn.simpleicons.org/css3/1572B6" alt="CSS3" /><span>CSS3</span></div>
+                                                        <div class="marquee-item item-react"><img src="https://cdn.simpleicons.org/react/61DAFB" alt="React" /><span>React</span></div>
+                                                        <div class="marquee-item item-nextdotjs"><img src="https://cdn.simpleicons.org/nextdotjs/white" alt="Next.js" /><span>Next.js</span></div>
+                                                        <div class="marquee-item item-pandas"><img src="https://cdn.simpleicons.org/pandas/150458" alt="Pandas" /><span>Pandas</span></div>
+                                                </div>
+                                        </div>
+                                </div>
+
+                                        </div>
+                                </div>
+                        </div>
+                </section>
+
+
+                <!-- EDUCATION TIMELINE -->
+                <section id="education" class="education-section fade-section">
+                        <div class="timeline-wire-wrap">
+                                <div class="timeline-wire-glow"></div>
+                        </div>
+                        <div class="education-container">
+                                <div class="education-cards">
+                                        <!-- High School -->
+                                        <div class="glass-card edu-card" data-year="2020">
+                                                <div class="edu-bg-year" id="year-1">2020</div>
+                                                <span class="edu-year">2020 - 2022</span>
+                                                <h3 class="edu-title">HIGHER<br>SECONDARY</h3>
+                                                <div class="edu-school">SSGHSS KANDANGALI</div>
+                                                <p class="edu-desc">Laid the foundation for logical reasoning and scientific methodology.</p>
+                                        </div>
+
+                                        <!-- BCA -->
+                                        <div class="glass-card edu-card" data-year="2022">
+                                                <div class="edu-bg-year" id="year-2">2022</div>
+                                                <span class="edu-year">2022 - 2025</span>
+                                                <h3 class="edu-title">BCA</h3>
+                                                <div class="edu-school">GURUDEV ARTS AND SCIENCE COLLEGE</div>
+                                                <p class="edu-desc">Deep dive into Software Engineering, Database Management, and Full-Stack development.</p>
+                                        </div>
+
+                                        <!-- MCA -->
+                                        <div class="glass-card edu-card" data-year="2025">
+                                                <div class="edu-bg-year" id="year-3">2025</div>
+                                                <span class="edu-year">PRESENT</span>
+                                                <h3 class="edu-title">MCA</h3>
+                                                <div class="edu-school">LEAD COLLEGE (AUTONOMOUS)</div>
+                                                <p class="edu-desc">Mastering Enterprise Architecture, Cloud Infrastructure, and advanced DevOps practices.</p>
+                                        </div>
+                                </div>
+                        </div>
+                </section>
+
+                <!-- VENTURE SHOWCASE with side arrows -->
+                <section id="projects" class="projects-section fade-section">
+                        <div class="container">
+                                <h2 class="section-title">
+                                        Venture Showcase
+                                        <svg class="spin-accent" viewBox="0 0 100 100"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M50,0 C60,20 80,40 100,50 C80,60 60,80 50,100 C40,80 20,60 0,50 C20,40 40,20 50,0 Z"
+                                                        fill="var(--accent)" opacity="0.3" />
+                                        </svg>
+                                </h2>
+                                <div class="editorial-grid">
+                                        <!-- Project 01 -->
+                                        <div class="ed-project">
+                                                <div class="ed-content">
+                                                        <span class="ed-number">01</span>
+                                                        <h3 class="ed-title">STOCK<br>PORTFOLIO</h3>
+                                                        <div class="hashtags">
+                                                                <span class="hashtag">Python</span>
+                                                                <span class="hashtag">Streamlit</span>
+                                                                <span class="hashtag">Pandas</span>
+                                                        </div>
+                                                        <p class="ed-desc">Interactive dashboard for real‑time financial insights with automated risk assessment and live market data.</p>
+                                                        <a href="#" class="ed-link">View Project →</a>
+                                                </div>
+                                                <div class="ed-image-wrap">
+                                                        <div class="ed-image bg-1"></div>
+                                                </div>
+                                        </div>
+
+                                        <!-- Project 02 -->
+                                        <div class="ed-project align-right">
+                                                <div class="ed-content">
+                                                        <span class="ed-number">02</span>
+                                                        <h3 class="ed-title">GO-BUS<br>SYSTEM</h3>
+                                                        <div class="hashtags">
+                                                                <span class="hashtag">Python</span>
+                                                                <span class="hashtag">Flask</span>
+                                                                <span class="hashtag">MySQL</span>
+                                                        </div>
+                                                        <p class="ed-desc">Full‑stack booking platform with end‑to‑end route searching and real‑time seat availability.</p>
+                                                        <a href="#" class="ed-link">View Project →</a>
+                                                </div>
+                                                <div class="ed-image-wrap">
+                                                        <div class="ed-image bg-2"></div>
+                                                </div>
+                                        </div>
+
+                                        <!-- Project 03 -->
+                                        <div class="ed-project">
+                                                <div class="ed-content">
+                                                        <span class="ed-number">03</span>
+                                                        <h3 class="ed-title">AI CHATBOT<br>INFRA</h3>
+                                                        <div class="hashtags">
+                                                                <span class="hashtag">Python</span>
+                                                                <span class="hashtag">NLTK</span>
+                                                                <span class="hashtag">Flask</span>
+                                                        </div>
+                                                        <p class="ed-desc">Scalable conversational agent for high‑performance distributed cloud environments.</p>
+                                                        <a href="#" class="ed-link">View Project →</a>
+                                                </div>
+                                                <div class="ed-image-wrap">
+                                                        <div class="ed-image bg-3"></div>
+                                                </div>
+                                        </div>
+                                        
+                                        <!-- Project 04 -->
+                                        <div class="ed-project align-right">
+                                                <div class="ed-content">
+                                                        <span class="ed-number">04</span>
+                                                        <h3 class="ed-title">CLOUD COST<br>OPTIMIZER</h3>
+                                                        <div class="hashtags">
+                                                                <span class="hashtag">Python</span>
+                                                                <span class="hashtag">AWS</span>
+                                                                <span class="hashtag">Terraform</span>
+                                                        </div>
+                                                        <p class="ed-desc">Automate cloud resource optimization with real‑time recommendations.</p>
+                                                        <a href="#" class="ed-link">View Project →</a>
+                                                </div>
+                                                <div class="ed-image-wrap">
+                                                        <div class="ed-image bg-4"></div>
+                                                </div>
+                                        </div>
+
+                                        <!-- Project 05 -->
+                                        <div class="ed-project">
+                                                <div class="ed-content">
+                                                        <span class="ed-number">05</span>
+                                                        <h3 class="ed-title">DEVOPS<br>DASHBOARD</h3>
+                                                        <div class="hashtags">
+                                                                <span class="hashtag">React</span>
+                                                                <span class="hashtag">Prometheus</span>
+                                                                <span class="hashtag">Grafana</span>
+                                                        </div>
+                                                        <p class="ed-desc">Unified CI/CD and infrastructure monitoring dashboard.</p>
+                                                        <a href="#" class="ed-link">View Project →</a>
+                                                </div>
+                                                <div class="ed-image-wrap">
+                                                        <div class="ed-image bg-5"></div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </section>
+
+                <!-- CONTACT -->
+                <section id="contact" class="contact fade-section">
+                        <div class="container">
+                                <h2 class="section-title">
+                                        Let's Connect
+                                        <svg class="spin-accent" viewBox="0 0 100 100"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M50,0 C60,20 80,40 100,50 C80,60 60,80 50,100 C40,80 20,60 0,50 C20,40 40,20 50,0 Z"
+                                                        fill="var(--accent)" opacity="0.3" />
+                                        </svg>
+                                </h2>
+                                <form class="contact-form" action="https://formsubmit.co/gobus128@gmail.com"
+                                        method="POST">
+                                        <input type="text" name="_honey" style="display:none">
+                                        <input type="hidden" name="_captcha" value="false">
+                                        <input type="hidden" name="_next" value="https://sayanth.dev/thanks.html">
+                                        <div class="form-group"><label for="name">Name</label><input type="text"
+                                                        id="name" name="name" placeholder="Your name" required></div>
+                                        <div class="form-group"><label for="email">Email</label><input type="email"
+                                                        id="email" name="email" placeholder="your@email.com" required>
+                                        </div>
+                                        <div class="form-group full-width"><label for="message">Message</label><textarea
+                                                        id="message" name="message" rows="5"
+                                                        placeholder="Your message..." required></textarea></div>
+                                        <div class="form-group full-width"><button type="submit" class="send-btn">Send
+                                                        Message</button>
+                                        </div>
+                                </form>
+                        </div>
+                </section>
+        </main>
+        <footer class="footer">
+                <div class="container">
+                        <p>© 2025 Sayanth Satheesh. All rights reserved.</p>
+                </div>
+        </footer>
+
+        <script>
+                (function () {
+                        // Cinematic Preloader Logic
+                        const loader = document.getElementById('loader');
+                        const countEl = document.getElementById('count');
+                        const statusEl = document.getElementById('status');
+                        let count = 0;
+                        const duration = 3000; // 3s for count
+                        const startTime = performance.now();
+
+                        function updateLoader(timestamp) {
+                                const elapsed = timestamp - startTime;
+                                const progress = Math.min(elapsed / duration, 1);
+                                
+                                count = Math.floor(progress * 100);
+                                countEl.textContent = count;
+                                countEl.style.setProperty('--p', `${count}%`);
+
+                                if (count === 20) statusEl.textContent = "LOADING ASSETS";
+                                if (count === 35) statusEl.textContent = "COMPILING MODULES";
+                                if (count === 50) statusEl.textContent = "STYLING INTERFACE";
+                                if (count === 80) statusEl.textContent = "FINALIZING";
+                                
+                                if (progress < 1) {
+                                        requestAnimationFrame(updateLoader);
+                                } else {
+                                        statusEl.textContent = "SYSTEM LOADED";
+                                        setTimeout(() => {
+                                                loader.classList.add('exit');
+                                        }, 500);
+                                }
+                        }
+                        requestAnimationFrame(updateLoader);
+
+                        // Typing effect
+                        const phrases = ["DevOps Enthusiast & MCA Student", "Aspiring Software Developer"];
+                        let index = 0, charIndex = 0, isDeleting = false;
+                        const typedElement = document.getElementById('typed-phrase');
+                        function typeEffect() {
+                                const current = phrases[index];
+                                if (isDeleting) {
+                                        typedElement.textContent = current.substring(0, charIndex - 1);
+                                        charIndex--;
+                                } else {
+                                        typedElement.textContent = current.substring(0, charIndex + 1);
+                                        charIndex++;
+                                }
+                                if (!isDeleting && charIndex === current.length) {
+                                        isDeleting = true;
+                                        setTimeout(typeEffect, 2000);
+                                } else if (isDeleting && charIndex === 0) {
+                                        isDeleting = false;
+                                        index = (index + 1) % phrases.length;
+                                        setTimeout(typeEffect, 500);
+                                } else {
+                                        setTimeout(typeEffect, isDeleting ? 50 : 100);
+                                }
+                        }
+                        typeEffect();
+
+                        // Intersection Observer
+                        const sections = document.querySelectorAll('.fade-section');
+                        const observer = new IntersectionObserver((entries) => {
+                                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('section-visible'); });
+                        }, { threshold: 0.2 });
+                        sections.forEach(section => observer.observe(section));
+
+                        // Data-Stream Scroll Logic
+                        const eduCards = document.querySelectorAll('.edu-card');
+                        
+                        function handleEduScroll() {
+                                eduCards.forEach(card => {
+                                        const rect = card.getBoundingClientRect();
+                                        const viewHeight = window.innerHeight;
+                                        const yearEl = card.querySelector('.edu-bg-year');
+                                        
+                                        // Calculate fill percent based on card position in viewport
+                                        // 0% at bottom of screen, 100% at center of screen
+                                        const start = viewHeight;
+                                        const end = viewHeight / 2.5;
+                                        
+                                        let fill = (start - rect.top) / (start - end) * 100;
+                                        fill = Math.max(0, Math.min(100, fill));
+                                        
+                                        yearEl.style.setProperty('--fill', `${fill}%`);
+                                        
+                                        // Slight parallax/scale on card
+                                        if(rect.top < viewHeight && rect.bottom > 0) {
+                                            const scale = 0.95 + (fill / 100) * 0.05;
+                                            card.style.transform = `scale(${scale})`;
+                                        }
+                                });
+                        }
+
+                        window.addEventListener('scroll', handleEduScroll);
+                        handleEduScroll(); // Initial check
+                })();
+        </script>
+</body>
+
+</html>

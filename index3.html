@@ -16,28 +16,14 @@
 
 <body>
         <!-- Preloader & Curtain Reveal -->
-        <!-- System Boot & Hex-Logo Preloader -->
-        <div class="terminal-loader">
-                <div class="terminal-content">
-                        <!-- Hex-Container Logo -->
-                        <div class="hex-wrapper">
-                                <svg class="hex-logo" viewBox="0 0 100 100">
-                                        <polygon class="hex-bg" points="50,5 90,25 90,75 50,95 10,75 10,25" />
-                                        <polygon class="hex-border" points="50,5 90,25 90,75 50,95 10,75 10,25" />
-                                        <text x="50" y="62" class="hex-cursor">
-                                                <tspan dx="-8">>_</tspan>
-                                        </text>
-                                </svg>
-                                <div class="hex-branding">SAYANTH</div>
-                        </div>
-
-                        <!-- System Logs -->
-                        <div class="terminal-body">
-                                <div class="terminal-line" data-delay="0.5"> [0.0012] Initializing VibeOS Core...</div>
-                                <div class="terminal-line" data-delay="1.0"> [0.4829] Port 8000: Operational</div>
-                                <div class="terminal-line" data-delay="1.5"> [1.1923] Syncing Git.Actions flow...</div>
-                                <div class="terminal-line" data-delay="2.0"> [1.8544] Loading Infrastructure...</div>
-                                <div class="terminal-line" data-delay="2.5"> [2.4410] Connection: SECURE</div>
+        <!-- Cinematic Preloader -->
+        <div class="cinematic-loader" id="loader">
+                <div class="loader-panel panel-top"></div>
+                <div class="loader-panel panel-bottom"></div>
+                <div class="loader-inner">
+                        <div class="count-wrapper">
+                                <span class="count-number" id="count">0</span>
+                                <div class="count-status" id="status">INITIALIZING</div>
                         </div>
                 </div>
         </div>
@@ -57,20 +43,7 @@
                 <!-- HERO -->
                 <section id="home" class="hero fade-section">
                         <div class="hero-bg-text">SAYANTH</div>
-                        <div class="hero-3d-cards">
-                                <div class="floating-card card-1">
-                                        <div class="card-inner">
-                                                <div class="card-tag">Project 01</div>
-                                                <div class="card-title">VibeOS</div>
-                                        </div>
-                                </div>
-                                <div class="floating-card card-2">
-                                        <div class="card-inner">
-                                                <div class="card-tag">System</div>
-                                                <div class="card-title">Infrastructure</div>
-                                        </div>
-                                </div>
-                        </div>
+
                         <div class="hero-background-svg">
                                 <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
                                         <path class="svg-line-anim"
@@ -88,15 +61,15 @@
                                         High‑Availability
                                         Architecture.</p>
                                 <div class="hero-actions">
-                                        <a href="#" class="social-btn github"><svg viewBox="0 0 24 24">
+                                        <a href="https://sayanthsatheeesh.github.io/" class="social-btn github"><svg viewBox="0 0 24 24">
                                                         <path
                                                                 d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.03-2.682-.103-.253-.447-1.27.098-2.646 0 0 .84-.269 2.75 1.025.8-.223 1.65-.334 2.5-.334.85 0 1.7.111 2.5.334 1.91-1.294 2.75-1.025 2.75-1.025.545 1.376.201 2.393.099 2.646.64.698 1.03 1.591 1.03 2.682 0 3.841-2.337 4.687-4.565 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
                                                 </svg></a>
-                                        <a href="#" class="social-btn linkedin"><svg viewBox="0 0 24 24">
+                                        <a href="www.linkedin.com/in/sayanth-satheesh-900568380" class="social-btn linkedin"><svg viewBox="0 0 24 24">
                                                         <path
                                                                 d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451c.979 0 1.771-.773 1.771-1.729V1.729C24 .774 23.204 0 22.225 0z" />
                                                 </svg></a>
-                                        <a href="#" class="social-btn instagram"><svg viewBox="0 0 24 24">
+                                        <a href="https://www.instagram.com/saynthhhhh._?igsh=MW9hZXBtdnV0dmxxMQ==" class="social-btn instagram"><svg viewBox="0 0 24 24">
                                                         <path
                                                                 d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z" />
                                                 </svg></a>
@@ -127,7 +100,7 @@
                                         </svg>
                                 </h2>
                                 <div class="bento-grid">
-                                        <div class="bento-item">
+                                        <div class="bento-item fade-section">
                                                 <h3>Core Languages</h3>
                                                 <ul>
                                                         <li>Python</li>
@@ -136,21 +109,21 @@
                                                         <li>HTML5</li>
                                                 </ul>
                                         </div>
-                                        <div class="bento-item">
+                                        <div class="bento-item fade-section">
                                                 <h3>Data & Analytics</h3>
                                                 <ul>
                                                         <li>Pandas</li>
                                                         <li>yfinance</li>
                                                 </ul>
                                         </div>
-                                        <div class="bento-item">
+                                        <div class="bento-item fade-section">
                                                 <h3>Frontend & UI</h3>
                                                 <ul>
                                                         <li>React</li>
                                                         <li>Streamlit</li>
                                                 </ul>
                                         </div>
-                                        <div class="bento-item">
+                                        <div class="bento-item fade-section">
                                                 <h3>Backend & Cloud/DevOps</h3>
                                                 <ul>
                                                         <li>Flask</li>
@@ -198,42 +171,53 @@
                         </div>
                 </section>
 
-
-                <!-- EDUCATION TIMELINE -->
-                <section id="education" class="education-section fade-section">
-                        <div class="education-container">
-                                <!-- Progress Track -->
-                                <div class="timeline-track" id="timelineTrack">
-                                        <div class="timeline-progress" id="timelineProgress"></div>
-                                        <div class="timeline-dot dot-1" id="dot1"></div>
-                                        <div class="timeline-dot dot-2" id="dot2"></div>
-                                        <div class="timeline-dot dot-3" id="dot3"></div>
+                <!-- EDUCATION JOURNEY INTRO (Option B) -->
+                <section class="edu-intro-section fade-section">
+                        <div class="edu-intro-container">
+                                <div class="edu-intro-line line-left">
+                                        <span class="edu-intro-text">MY EDUCATION</span>
                                 </div>
+                                <div class="edu-intro-line line-right">
+                                        <span class="edu-intro-text">JOURNEY</span>
+                                </div>
+                                <div class="edu-intro-sub">CHAPTER II / THE ACADEMIC EVOLUTION</div>
+                        </div>
+                </section>
 
-                                <!-- Glass Cards -->
-                                <div class="education-cards">
-                                        <!-- High School -->
-                                        <div class="glass-card" id="card1">
-                                                <span class="edu-year">2020 - 2022</span>
-                                                <h3 class="edu-title">HIGHER<br>SECONDARY</h3>
-                                                <div class="edu-school">SSGHSS KANDANGALI</div>
-                                                <p class="edu-desc">Completed Higher Secondary Education.</p>
+                <!-- EDUCATION JOURNEY MILESTONES -->
+                <section id="education" class="education-section">
+                        <div class="education-journey">
+                                <!-- High School -->
+                                <div class="edu-milestone" id="edu-1">
+                                        <div class="milestone-bg-mask placeholder-1"></div>
+                                        <div class="milestone-number">01</div>
+                                        <div class="milestone-content">
+                                                <p class="milestone-tag">SECONDARY EDUCATION</p>
+                                                <h3 class="milestone-title">SSGHSS KANDANGALI</h3>
+                                                <p class="milestone-meta">Higher Secondary · Class XII</p>
+                                                <div class="milestone-year"><span>2020</span> &rarr; <span>2022</span></div>
                                         </div>
-
-                                        <!-- BCA -->
-                                        <div class="glass-card" id="card2">
-                                                <span class="edu-year">2022 - 2025</span>
-                                                <h3 class="edu-title">BCA</h3>
-                                                <div class="edu-school">GURUDEV ARTS AND SCIENCE COLLEGE</div>
-                                                <p class="edu-desc">Bachelor of Computer Applications.</p>
+                                </div>
+                                <!-- BCA -->
+                                <div class="edu-milestone" id="edu-2">
+                                        <div class="milestone-bg-mask placeholder-2"></div>
+                                        <div class="milestone-number">02</div>
+                                        <div class="milestone-content">
+                                                <p class="milestone-tag">UNDERGRADUATE DEGREE</p>
+                                                <h3 class="milestone-title">GURUDEV ARTS AND<br>SCIENCE COLLEGE</h3>
+                                                <p class="milestone-meta">BCA · Deep dive into Software Engineering</p>
+                                                <div class="milestone-year"><span>2022</span> &rarr; <span>2025</span></div>
                                         </div>
-
-                                        <!-- MCA -->
-                                        <div class="glass-card" id="card3">
-                                                <span class="edu-year">PRESENT</span>
-                                                <h3 class="edu-title">MCA</h3>
-                                                <div class="edu-school">LEAD COLLEGE (AUTONOMOUS)</div>
-                                                <p class="edu-desc">Pursuing Master of Computer Applications.</p>
+                                </div>
+                                <!-- MCA -->
+                                <div class="edu-milestone" id="edu-3">
+                                        <div class="milestone-bg-mask placeholder-3"></div>
+                                        <div class="milestone-number">03</div>
+                                        <div class="milestone-content">
+                                                <p class="milestone-tag">POSTGRADUATE DEGREE</p>
+                                                <h3 class="milestone-title">LEAD COLLEGE<br>(AUTONOMOUS)</h3>
+                                                <p class="milestone-meta">MCA · Enterprise Architecture & Cloud Infra</p>
+                                                <div class="milestone-year"><span>2025</span> &rarr; <span>PRESENT</span></div>
                                         </div>
                                 </div>
                         </div>
@@ -252,7 +236,7 @@
                                 </h2>
                                 <div class="editorial-grid">
                                         <!-- Project 01 -->
-                                        <div class="ed-project">
+                                        <div class="ed-project fade-section">
                                                 <div class="ed-content">
                                                         <span class="ed-number">01</span>
                                                         <h3 class="ed-title">STOCK<br>PORTFOLIO</h3>
@@ -270,7 +254,7 @@
                                         </div>
 
                                         <!-- Project 02 -->
-                                        <div class="ed-project align-right">
+                                        <div class="ed-project align-right fade-section">
                                                 <div class="ed-content">
                                                         <span class="ed-number">02</span>
                                                         <h3 class="ed-title">GO-BUS<br>SYSTEM</h3>
@@ -288,7 +272,7 @@
                                         </div>
 
                                         <!-- Project 03 -->
-                                        <div class="ed-project">
+                                        <div class="ed-project fade-section">
                                                 <div class="ed-content">
                                                         <span class="ed-number">03</span>
                                                         <h3 class="ed-title">AI CHATBOT<br>INFRA</h3>
@@ -306,7 +290,7 @@
                                         </div>
                                         
                                         <!-- Project 04 -->
-                                        <div class="ed-project align-right">
+                                        <div class="ed-project align-right fade-section">
                                                 <div class="ed-content">
                                                         <span class="ed-number">04</span>
                                                         <h3 class="ed-title">CLOUD COST<br>OPTIMIZER</h3>
@@ -324,7 +308,7 @@
                                         </div>
 
                                         <!-- Project 05 -->
-                                        <div class="ed-project">
+                                        <div class="ed-project fade-section">
                                                 <div class="ed-content">
                                                         <span class="ed-number">05</span>
                                                         <h3 class="ed-title">DEVOPS<br>DASHBOARD</h3>
@@ -355,7 +339,7 @@
                                                         fill="var(--accent)" opacity="0.3" />
                                         </svg>
                                 </h2>
-                                <form class="contact-form" action="https://formsubmit.co/gobus128@gmail.com"
+                                <form class="contact-form" action="https://formsubmit.co/00dc813c6ef8c60f54fb6bc7383b543c"
                                         method="POST">
                                         <input type="text" name="_honey" style="display:none">
                                         <input type="hidden" name="_captcha" value="false">
@@ -383,6 +367,38 @@
 
         <script>
                 (function () {
+                        // Cinematic Preloader Logic
+                        const loader = document.getElementById('loader');
+                        const countEl = document.getElementById('count');
+                        const statusEl = document.getElementById('status');
+                        let count = 0;
+                        const duration = 3000; // 3s for count
+                        const startTime = performance.now();
+
+                        function updateLoader(timestamp) {
+                                const elapsed = timestamp - startTime;
+                                const progress = Math.min(elapsed / duration, 1);
+                                
+                                count = Math.floor(progress * 100);
+                                countEl.textContent = count;
+                                countEl.style.setProperty('--p', `${count}%`);
+
+                                if (count === 20) statusEl.textContent = "LOADING ASSETS";
+                                if (count === 35) statusEl.textContent = "COMPILING MODULES";
+                                if (count === 50) statusEl.textContent = "STYLING INTERFACE";
+                                if (count === 80) statusEl.textContent = "FINALIZING";
+                                
+                                if (progress < 1) {
+                                        requestAnimationFrame(updateLoader);
+                                } else {
+                                        statusEl.textContent = "SYSTEM LOADED";
+                                        setTimeout(() => {
+                                                loader.classList.add('exit');
+                                        }, 500);
+                                }
+                        }
+                        requestAnimationFrame(updateLoader);
+
                         // Typing effect
                         const phrases = ["DevOps Enthusiast & MCA Student", "Aspiring Software Developer"];
                         let index = 0, charIndex = 0, isDeleting = false;
@@ -409,49 +425,35 @@
                         }
                         typeEffect();
 
-                        // Intersection Observer
+                        // Intersection Observer for site-wide section fades
                         const sections = document.querySelectorAll('.fade-section');
                         const observer = new IntersectionObserver((entries) => {
-                                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('section-visible'); });
-                        }, { threshold: 0.2 });
-                        sections.forEach(section => observer.observe(section));
-
-                        // Vanilla JS Scroll Timeline
-                        const eduSection = document.getElementById('education');
-                        const progress = document.getElementById('timelineProgress');
-                        const dots = [document.getElementById('dot1'), document.getElementById('dot2'), document.getElementById('dot3')];
-
-                        if (eduSection && progress) {
-                                window.addEventListener('scroll', () => {
-                                        const rect = eduSection.getBoundingClientRect();
-                                        const windowHeight = window.innerHeight;
-
-                                        // Starts filling when section enters top third of screen
-                                        const startPos = windowHeight * 0.7;
-                                        // Ends filling when section is mostly scrolled past
-                                        const endPos = -rect.height + windowHeight * 0.3;
-
-                                        if (rect.top <= startPos && rect.top >= endPos) {
-                                                const totalScroll = startPos - endPos;
-                                                const currentScroll = startPos - rect.top;
-                                                let percentage = (currentScroll / totalScroll) * 100;
-
-                                                percentage = Math.max(0, Math.min(100, percentage));
-                                                progress.style.height = percentage + '%';
-
-                                                // Activate dots based on percentage positions matching CSS top: 10%, 48%, 88%
-                                                if (percentage >= 10) dots[0].classList.add('active'); else dots[0].classList.remove('active');
-                                                if (percentage >= 48) dots[1].classList.add('active'); else dots[1].classList.remove('active');
-                                                if (percentage >= 88) dots[2].classList.add('active'); else dots[2].classList.remove('active');
-                                        } else if (rect.top > startPos) {
-                                                progress.style.height = '0%';
-                                                dots.forEach(d => d.classList.remove('active'));
-                                        } else if (rect.top < endPos) {
-                                                progress.style.height = '100%';
-                                                dots.forEach(d => d.classList.add('active'));
+                                entries.forEach(entry => {
+                                        if (entry.isIntersecting) {
+                                                entry.target.classList.add('section-visible');
+                                        } else {
+                                                // Reset animation when scrolling away
+                                                entry.target.classList.remove('section-visible');
                                         }
                                 });
-                        }
+                        }, { threshold: 0.1 }); // Use a lower threshold for smoother entry/exit
+                        sections.forEach(section => observer.observe(section));
+
+                        // Cinematic Education Journey Logic
+                        const eduMilestones = document.querySelectorAll('.edu-milestone');
+                        const eduObserver = new IntersectionObserver((entries) => {
+                                entries.forEach(entry => {
+                                        if (entry.isIntersecting) {
+                                                // Trigger the sequential animation class
+                                                entry.target.classList.add('is-visible');
+                                        } else {
+                                                // Reset animation when scrolling away for replay effect
+                                                entry.target.classList.remove('is-visible');
+                                        }
+                                });
+                        }, { threshold: 0.2 }); // Reduced threshold for smoother transitions
+
+                        eduMilestones.forEach(milestone => eduObserver.observe(milestone));
                 })();
         </script>
 </body>
