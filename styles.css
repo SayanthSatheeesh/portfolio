@@ -1285,61 +1285,439 @@ html {
     justify-content: center;
     background: #000000;
     overflow: hidden;
-    perspective: 1000px;
+    perspective: 2000px; /* Enhanced perspective for deep Z-displacement */
 }
 
 .edu-intro-container {
-    text-align: center;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+.edu-slice-wrapper {
+    position: relative;
+    width: 90vw;
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+.edu-slice-svg {
     width: 100%;
-    padding: 2rem;
+    height: 100%;
+    overflow: visible;
+    transform-style: preserve-3d;
 }
 
-.edu-intro-line {
-    display: block;
-    overflow: hidden;
-    margin: 0.5rem 0;
-    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease;
+.edu-svg-layer {
+    transform-style: preserve-3d;
+    transition: filter 0.3s ease;
 }
 
-.edu-intro-text {
-    display: block;
+.edu-svg-layer text {
     font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(3rem, 10vw, 8rem);
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: -0.02em;
-    line-height: 1;
+    font-size: 95px; /* Precision-scaled for the 2400px Wide ViewBox */
+    font-weight: 900;
+    fill: #ffffff;
+    letter-spacing: -0.01em;
+    pointer-events: none;
+    will-change: transform, filter;
 }
 
-.line-left {
-    transform: translateX(-50%) rotateY(45deg);
-    opacity: 0;
+/* Slicing Logic for SVG Groups */
+.slice-top {
+    clip-path: inset(0 0 66% 0);
 }
 
-.line-right {
-    transform: translateX(50%) rotateY(-45deg);
-    opacity: 0;
+.slice-mid {
+    clip-path: inset(32% 0 32% 0); /* Slight overlap increase for stability */
 }
+
+.slice-bot {
+    clip-path: inset(66% 0 0 0);
+}
+
+/* Spectral RGB Split Filters */
+.spectral-top { filter: drop-shadow(-1px -1px 0px rgba(255, 0, 0, 0.4)); }
+.spectral-bot { filter: drop-shadow(1px 1px 0px rgba(0, 255, 255, 0.4)); }
 
 .edu-intro-sub {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
+    font-size: 0.75rem;
     color: var(--accent);
-    margin-top: 3rem;
-    letter-spacing: 0.3em;
+    margin-top: 4rem;
+    letter-spacing: 0.6em;
     opacity: 0;
     transform: translateY(20px);
-    transition: all 0.8s ease 0.8s;
+    transition: opacity 0.8s ease 2.2s, transform 0.8s ease 2.2s;
 }
 
-/* Triggered states */
-.edu-intro-section.section-visible .line-left,
-.edu-intro-section.section-visible .line-right {
-    transform: translateX(0) rotateY(0deg);
-    opacity: 1;
-}
-
-.edu-intro-section.section-visible .edu-intro-sub {
+/* Sub-line reveal triggered once draw is done */
+.edu-draw-wrapper.is-drawing ~ .edu-intro-sub,
+.edu-intro-section.draw-complete .edu-intro-sub {
     opacity: 1;
     transform: translateY(0);
-}
+}
+
+/* ==========================================================================
+   SVG PATH DRAW — Artisan Entrance Animation
+   Two-stage: 1. Cyan stroke draws left→right  2. White fill blooms in
+   ========================================================================== */
+
+.edu-draw-wrapper {
+    position: relative;
+    width: 90vw;
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edu-draw-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* ── STAGE 1: Stroke Draw ─────────────────────────────────────────────── */
+.edu-draw-stroke {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 95px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    fill: transparent;
+    stroke: #00FFFF;          /* Starts Cyan */
+    stroke-width: 1px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    /* The core draw mechanism */
+    stroke-dasharray: 6000;
+    stroke-dashoffset: 6000;  /* Fully hidden at start */
+
+    /* No transition here — animation is applied via @keyframes on .is-drawing */
+}
+
+/* ── STAGE 2: Fill Bloom ──────────────────────────────────────────────── */
+.edu-draw-fill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 95px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    fill: transparent;         /* Hidden at start */
+    stroke: none;
+
+    /* Fill blooms in after stroke completes */
+    transition: fill 0.6s ease;
+}
+
+/* ── TRIGGERED STATE — applied via JS IntersectionObserver ────────────── */
+
+/* Draw the stroke left → right */
+.edu-draw-wrapper.is-drawing .edu-draw-stroke {
+    animation:
+        stroke-draw 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+        stroke-color-shift 1.8s ease forwards;
+}
+
+/* Fill blooms in 1.9s after draw starts — after stroke is complete */
+.edu-draw-wrapper.is-drawing .edu-draw-fill {
+    fill: #ffffff;
+    transition: fill 0.7s ease 1.9s;
+}
+
+/* ── KEYFRAMES ─────────────────────────────────────────────────────────── */
+
+/* The draw: dashoffset goes from 6000 → 0, revealing the stroke */
+@keyframes stroke-draw {
+    from { stroke-dashoffset: 6000; }
+    to   { stroke-dashoffset: 0; }
+}
+
+/* Color shifts from Cyan → White during the draw */
+@keyframes stroke-color-shift {
+    0%   { stroke: #00FFFF; stroke-width: 1.5px; }
+    50%  { stroke: #80FFFF; stroke-width: 1px; }
+    100% { stroke: #FFFFFF; stroke-width: 0.5px; }
+}
+
+/* ── SLICE WRAPPER (post-draw scroll physics) ──────────────────────────── */
+/* Overrides the inline display:none once draw is complete */
+.edu-intro-section.draw-complete .edu-slice-wrapper {
+    display: flex !important;
+}
+
+.edu-intro-section.draw-complete .edu-draw-wrapper {
+    display: none;
+}
+
+
+/* ==========================================================================
+   CINEMATIC PROJECT SECTION REDESIGN
+   ========================================================================== */
+
+.projects-section {
+    padding: 0;
+    background: #000000;
+}
+
+/* Project Header with Marquees */
+.project-header-v2 {
+    height: 100vh; /* Reduced from 150vh for better focus */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    z-index: 10; /* Adds a stacking order to stay on top of the next section */
+}
+
+.project-marquee-bg {
+    position: absolute;
+    width: 200%;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(6rem, 20vw, 15rem);
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.15); /* Increased from 0.08 for better visibility */
+    white-space: nowrap;
+    pointer-events: none;
+    text-transform: uppercase;
+    z-index: 1;
+}
+
+.header-dot {
+    position: absolute;
+    top: 5rem;
+    left: 5rem;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    z-index: 5;
+    opacity: 0.8;
+}
+
+.marquee-top {
+    top: 25%; /* Adjusted from 15% to keep it visible near the title */
+    transform: translateY(-50%);
+    animation: marquee-left 30s linear infinite; 
+}
+
+.marquee-bottom {
+    top: 75%; /* Adjusted from 85% to keep it tighter */
+    transform: translateY(-50%);
+    animation: marquee-right 35s linear infinite; 
+    opacity: 0.15; 
+}
+
+@keyframes marquee-left {
+    from { transform: translateY(-50%) translateX(0); }
+    to { transform: translateY(-50%) translateX(-50%); }
+}
+
+@keyframes marquee-right {
+    from { transform: translateY(-50%) translateX(-50%); }
+    to { transform: translateY(-50%) translateX(0); }
+}
+
+.project-title-v2 {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.title-top {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.8em;
+    display: block;
+    margin-bottom: 2rem;
+    opacity: 1;
+}
+
+.title-main {
+    font-size: clamp(4rem, 12vw, 14rem); /* Slightly reduced for better mobile/laptop fit */
+    font-weight: 950;
+    color: #fff;
+    line-height: 0.8;
+    letter-spacing: -0.06em;
+    margin-bottom: 2rem;
+}
+
+.title-explore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    opacity: 0.4;
+}
+
+.explore-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: #fff;
+}
+
+.explore-line {
+    width: 40px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Cinematic Project Cards */
+.cinematic-project-list {
+    padding: 10vw 0;
+}
+
+.cine-card {
+    min-height: 90vh; /* Reduced from 120vh to fit laptop screens */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6vw;
+    position: relative;
+    margin-bottom: 20vh;
+}
+
+.cine-card:nth-child(even) {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.cine-card-inner {
+    width: 100%;
+    max-width: 900px;
+}
+
+.cine-image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+    transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    background: #0a0e0c; /* Dark Emerald fallback if image fails */
+}
+
+.cine-card.is-visible .cine-image-wrapper {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.cine-img {
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    filter: grayscale(100%) brightness(0.6);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease;
+}
+
+.cine-card:hover .cine-img {
+    filter: grayscale(20%) brightness(0.8);
+    transform: scale(1.05);
+}
+
+/* Scanline / Texture Overlay */
+.cine-image-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+    opacity: 0.3;
+    z-index: 2;
+}
+
+/* Project Content */
+.cine-content {
+    margin-top: 2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+}
+
+.cine-card.is-visible .cine-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cine-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+.cine-card:nth-child(even) .cine-meta {
+    justify-content: flex-end;
+}
+
+.cine-title {
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+}
+
+.cine-title span {
+    display: block;
+}
+
+.cine-title .stroke {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+}
+
+.cine-desc {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 500px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.cine-card:nth-child(even) .cine-desc {
+    margin-left: auto;
+}
+
+.cine-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: gap 0.3s ease;
+}
+
+.cine-link:hover {
+    gap: 1rem;
+    color: var(--accent);
+}
+
+.cine-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+
