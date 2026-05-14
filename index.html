@@ -12,6 +12,10 @@
                 rel="stylesheet">
         <!-- External CSS -->
         <link rel="stylesheet" href="styles.css">
+        <!-- Animation Libraries -->
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12/dist/ScrollTrigger.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
 </head>
 
 <body>
@@ -314,187 +318,199 @@
         </footer>
 
         <script>
-                // Force page to start at top on refresh
-                if (history.scrollRestoration) {
-                        history.scrollRestoration = 'manual';
-                }
-                window.scrollTo(0, 0);
-
+                // GSAP & Lenis Implementation
                 (function () {
-                        // Cinematic Preloader Logic
+                        // 1. Initialize Lenis (Smooth Scroll)
+                        const lenis = new Lenis({
+                                lerp: 0.07, // Cinematic weight
+                                wheelMultiplier: 1,
+                                touchMultiplier: 1.2,
+                                smoothWheel: true
+                        });
+
+                        function raf(time) {
+                                lenis.raf(time);
+                                requestAnimationFrame(raf);
+                        }
+                        requestAnimationFrame(raf);
+
+                        // Sync ScrollTrigger with Lenis
+                        lenis.on('scroll', ScrollTrigger.update);
+                        gsap.ticker.add((time) => {
+                                lenis.raf(time * 1000);
+                        });
+                        gsap.ticker.lagSmoothing(0);
+
+                        // Force top on load
+                        window.scrollTo(0, 0);
+                        lenis.scrollTo(0, { immediate: true });
+
+                        // 2. Cinematic Preloader Logic
                         const loader = document.getElementById('loader');
                         const countEl = document.getElementById('count');
                         const statusEl = document.getElementById('status');
                         let count = 0;
-                        const duration = 3000; // 3s for count
+                        const duration = 3000;
                         const startTime = performance.now();
 
                         function updateLoader(timestamp) {
                                 const elapsed = timestamp - startTime;
                                 const progress = Math.min(elapsed / duration, 1);
-                                
                                 count = Math.floor(progress * 100);
                                 countEl.textContent = count;
                                 countEl.style.setProperty('--p', `${count}%`);
 
                                 if (count === 20) statusEl.textContent = "LOADING ASSETS";
-                                if (count === 35) statusEl.textContent = "COMPILING MODULES";
-                                if (count === 50) statusEl.textContent = "STYLING INTERFACE";
-                                if (count === 80) statusEl.textContent = "FINALIZING";
-                                
+                                if (count === 40) statusEl.textContent = "SYNCING PHYSICS";
+                                if (count === 60) statusEl.textContent = "INITIALIZING GSAP";
+                                if (count === 85) statusEl.textContent = "READY";
+
                                 if (progress < 1) {
                                         requestAnimationFrame(updateLoader);
                                 } else {
-                                        statusEl.textContent = "SYSTEM LOADED";
+                                        statusEl.textContent = "SYSTEM DEPLOYED";
                                         setTimeout(() => {
                                                 loader.classList.add('exit');
+                                                startAnimations(); // Trigger entrance animations
                                         }, 500);
                                 }
                         }
                         requestAnimationFrame(updateLoader);
 
-                        // Typing effect
+                        // 3. Animation Logic
+                        function startAnimations() {
+                                // Hero Stagger
+                                const heroTl = gsap.timeline();
+                                heroTl.to(".hero-line span", {
+                                        y: 0,
+                                        opacity: 1,
+                                        duration: 1.2,
+                                        stagger: 0.2,
+                                        ease: "expo.out"
+                                }).to(".devops-line, .hero-sub, .hero-actions", {
+                                        opacity: 1,
+                                        y: 0,
+                                        duration: 1,
+                                        stagger: 0.1,
+                                        ease: "power2.out"
+                                }, "-=0.6");
+
+                                // Global Bi-Directional Section Triggers
+                                const fadeSections = document.querySelectorAll('.fade-section');
+                                fadeSections.forEach(section => {
+                                        gsap.fromTo(section, 
+                                                { opacity: 0, y: 50 },
+                                                {
+                                                        opacity: 1,
+                                                        y: 0,
+                                                        duration: 1,
+                                                        ease: "power3.out",
+                                                        scrollTrigger: {
+                                                                trigger: section,
+                                                                start: "top 85%",
+                                                                end: "bottom 15%",
+                                                                toggleActions: "play reverse play reverse"
+                                                        }
+                                                }
+                                        );
+                                });
+
+                                // Bento Grid Stagger
+                                gsap.from(".bento-item", {
+                                        opacity: 0,
+                                        y: 30,
+                                        duration: 0.8,
+                                        stagger: 0.1,
+                                        ease: "power2.out",
+                                        scrollTrigger: {
+                                                trigger: ".bento-grid",
+                                                start: "top 80%",
+                                                toggleActions: "play none none reverse"
+                                        }
+                                });
+
+                                // Project Card Clip-Path Reveals
+                                const cards = document.querySelectorAll('.cine-card');
+                                cards.forEach(card => {
+                                        gsap.fromTo(card, 
+                                                { opacity: 0, y: 100 },
+                                                {
+                                                        opacity: 1,
+                                                        y: 0,
+                                                        duration: 1.2,
+                                                        ease: "power4.out",
+                                                        scrollTrigger: {
+                                                                trigger: card,
+                                                                start: "top 90%",
+                                                                end: "bottom 10%",
+                                                                toggleActions: "play reverse play reverse"
+                                                        }
+                                                }
+                                        );
+                                });
+
+                                // Parallax Effects
+                                gsap.to(".hero-bg-text", {
+                                        yPercent: -20,
+                                        ease: "none",
+                                        scrollTrigger: {
+                                                trigger: ".hero",
+                                                start: "top top",
+                                                end: "bottom top",
+                                                scrub: true
+                                        }
+                                });
+
+                                document.querySelectorAll('.cine-img').forEach(img => {
+                                        gsap.to(img, {
+                                                yPercent: 15,
+                                                ease: "none",
+                                                scrollTrigger: {
+                                                        trigger: img.parentElement,
+                                                        scrub: true
+                                                }
+                                        });
+                                });
+                        }
+
+                        // 4. Typing Effect (Preserved)
                         const phrases = ["DevOps Enthusiast & MCA Student", "Aspiring Software Developer"];
-                        let index = 0, charIndex = 0, isDeleting = false;
-                        const typedElement = document.getElementById('typed-phrase');
-                        function typeEffect() {
-                                const current = phrases[index];
+                        let phraseIdx = 0, charIdx = 0, isDeleting = false;
+                        const typedEl = document.getElementById('typed-phrase');
+                        
+                        function type() {
+                                const current = phrases[phraseIdx];
                                 if (isDeleting) {
-                                        typedElement.textContent = current.substring(0, charIndex - 1);
-                                        charIndex--;
+                                        typedEl.textContent = current.substring(0, charIdx - 1);
+                                        charIdx--;
                                 } else {
-                                        typedElement.textContent = current.substring(0, charIndex + 1);
-                                        charIndex++;
+                                        typedEl.textContent = current.substring(0, charIdx + 1);
+                                        charIdx++;
                                 }
-                                if (!isDeleting && charIndex === current.length) {
+
+                                if (!isDeleting && charIdx === current.length) {
                                         isDeleting = true;
-                                        setTimeout(typeEffect, 2000);
-                                } else if (isDeleting && charIndex === 0) {
+                                        setTimeout(type, 2000);
+                                } else if (isDeleting && charIdx === 0) {
                                         isDeleting = false;
-                                        index = (index + 1) % phrases.length;
-                                        setTimeout(typeEffect, 500);
+                                        phraseIdx = (phraseIdx + 1) % phrases.length;
+                                        setTimeout(type, 500);
                                 } else {
-                                        setTimeout(typeEffect, isDeleting ? 50 : 100);
+                                        setTimeout(type, isDeleting ? 40 : 80);
                                 }
                         }
-                        typeEffect();
+                        type();
 
-                        // Intersection Observer for site-wide section fades
-                        const sections = document.querySelectorAll('.fade-section');
-                        const observer = new IntersectionObserver((entries) => {
-                                entries.forEach(entry => {
-                                        if (entry.isIntersecting) {
-                                                entry.target.classList.add('section-visible');
-                                        } else {
-                                                // Reset animation when scrolling away
-                                                entry.target.classList.remove('section-visible');
-                                        }
+                        // 5. Magnetic Button Effect for Socials
+                        document.querySelectorAll('.social-btn').forEach(btn => {
+                                btn.addEventListener('mousemove', (e) => {
+                                        const rect = btn.getBoundingClientRect();
+                                        const x = e.clientX - rect.left - rect.width / 2;
+                                        const y = e.clientY - rect.top - rect.height / 2;
+                                        gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" });
                                 });
-                        }, { threshold: 0.1 }); // Use a lower threshold for smoother entry/exit
-                        sections.forEach(section => observer.observe(section));
-
-
-                        // ═══════════════════════════════════════════════════════
-                        // PHASE 1: SVG PATH DRAW — Artisan Entrance
-                        // ═══════════════════════════════════════════════════════
-                        const drawWrapper    = document.getElementById('edu-draw-wrapper');
-                        const eduSection     = document.querySelector('.edu-intro-section');
-                        const sliceWrapper   = document.getElementById('edu-slice-wrapper');
-                        const svgTop         = document.getElementById('svg-slice-top');
-                        const svgMid         = document.getElementById('svg-slice-mid');
-                        const svgBot         = document.getElementById('svg-slice-bot');
-
-                        let drawComplete = false;
-
-                        // Fire the draw animation when the section enters the viewport
-                        const drawObserver = new IntersectionObserver((entries) => {
-                                entries.forEach(entry => {
-                                        if (entry.isIntersecting && !drawComplete) {
-                                                // Start the Cyan → White stroke draw
-                                                drawWrapper.classList.add('is-drawing');
-
-                                                // After animation completes (2.8s):
-                                                // hide draw SVG → reveal kinetic slice SVG
-                                                setTimeout(() => {
-                                                        drawComplete = true;
-                                                        eduSection.classList.add('draw-complete');
-                                                }, 2800);
-
-                                                drawObserver.unobserve(entry.target); // Only fires once
-                                        }
-                                });
-                        }, { threshold: 0.3 });
-
-                        if (drawWrapper) drawObserver.observe(drawWrapper);
-
-                        // ═══════════════════════════════════════════════════════
-                        // PHASE 2: KINETIC SCROLL PHYSICS (after draw completes)
-                        // Only active once the slice wrapper is visible
-                        // ═══════════════════════════════════════════════════════
-                        if (eduSection && svgTop && svgMid && svgBot) {
-                                window.addEventListener('scroll', () => {
-                                        if (!drawComplete) return; // ← Gate: do nothing until draw finishes
-
-                                        const rect = eduSection.getBoundingClientRect();
-                                        const viewportHeight = window.innerHeight;
-
-                                        const sectionCenter = rect.top + (rect.height / 2);
-                                        const viewportCenter = viewportHeight / 2;
-                                        const diff = sectionCenter - viewportCenter;
-
-                                        let progress = diff / viewportHeight;
-                                        progress = Math.max(-1, Math.min(1, progress));
-
-                                        // "One-Way Shatter": shattered on entry, stays solid after
-                                        let strength = progress > 0 ? progress : 0;
-                                        strength = Math.min(1, Math.max(0, strength));
-
-                                        const zOffset  = strength * 250;
-                                        const yOffset  = strength * 140;
-                                        const xOffset  = progress * 60;
-                                        const rotateX  = progress * 25;
-                                        const rotateY  = progress * -15;
-                                        const stretch  = 1 + (strength * 0.15);
-
-                                        svgTop.style.transform = `translate3d(-${xOffset}px, -${yOffset}px, ${zOffset}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                                        svgMid.style.transform = `translate3d(${xOffset * 0.3}px, 0, ${zOffset * 0.5}px) scaleX(${stretch})`;
-                                        svgBot.style.transform = `translate3d(${xOffset}px, ${yOffset}px, ${zOffset}px) rotateX(${-rotateX}deg) rotateY(${-rotateY}deg)`;
-
-                                        if (strength > 0.1) {
-                                                svgTop.classList.add('spectral-top');
-                                                svgBot.classList.add('spectral-bot');
-                                        } else {
-                                                svgTop.classList.remove('spectral-top');
-                                                svgBot.classList.remove('spectral-bot');
-                                        }
-                                });
-                        }
-
-
-                        // Observer for the individual milestones (Education & Projects)
-                        const revealElements = document.querySelectorAll('.edu-milestone, .cine-card, .project-title-v2');
-                        const revealObserver = new IntersectionObserver((entries) => {
-                                entries.forEach(entry => {
-                                        if (entry.isIntersecting) {
-                                                entry.target.classList.add('is-visible');
-                                        }
-                                });
-                        }, { threshold: 0.1 }); 
-
-                        revealElements.forEach(el => revealObserver.observe(el));
-
-                        // Project Image Parallax Logic
-                        window.addEventListener('scroll', () => {
-                                const cineImages = document.querySelectorAll('.cine-img');
-                                cineImages.forEach(img => {
-                                        const rect = img.parentElement.getBoundingClientRect();
-                                        const viewportHeight = window.innerHeight;
-                                        
-                                        if (rect.top < viewportHeight && rect.bottom > 0) {
-                                                const scrollPercent = (viewportHeight - rect.top) / (viewportHeight + rect.height);
-                                                const yPos = (scrollPercent * 20) - 10; // Moves from -10% to 10%
-                                                img.style.transform = `translateY(${yPos}%) scale(1.1)`;
-                                        }
+                                btn.addEventListener('mouseleave', () => {
+                                        gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
                                 });
                         });
                 })();

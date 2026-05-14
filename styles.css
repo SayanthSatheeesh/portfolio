@@ -16,7 +16,28 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: initial; /* Lenis handles smoothing */
+}
+
+/* Lenis essential */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
 body {
@@ -308,16 +329,11 @@ body {
     }
 }
 
-/* Sections fade in on scroll */
+/* Sections fade in on scroll - Managed by GSAP now */
 .fade-section {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.fade-section.section-visible {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateY(40px);
+    will-change: transform, opacity;
 }
 
 /* ---------- HERO ---------- */
@@ -691,12 +707,18 @@ body {
 
 /* ---------- MARQUEE (Refined) ---------- */
 .marquee-wrapper {
-    width: 100%;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
     overflow: hidden;
     border-top: var(--border-light);
     border-bottom: var(--border-light);
-    padding: 3.5rem 0;
+    padding: 3rem 0;
     background: rgba(10, 10, 10, 0.3);
+    /* Edge fading mask */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+    position: relative;
+    z-index: 2;
 }
 
 .marquee-wrapper:hover .marquee {
@@ -706,7 +728,8 @@ body {
 .marquee {
     display: flex;
     width: fit-content;
-    animation: scroll 40s linear infinite;
+    animation: scroll 25s linear infinite;
+    will-change: transform;
 }
 
 .marquee-wrapper:hover .marquee {
@@ -724,9 +747,9 @@ body {
 
 .marquee-content {
     display: flex;
-    gap: 8rem;
+    gap: 6rem; /* Consistent high density */
     white-space: nowrap;
-    padding-right: 8rem;
+    padding-right: 6rem;
     align-items: center;
     flex-shrink: 0;
 }
@@ -1484,12 +1507,15 @@ html {
     width: 200%;
     font-family: 'JetBrains Mono', monospace;
     font-size: clamp(6rem, 20vw, 15rem);
-    font-weight: 900;
-    color: rgba(255, 255, 255, 0.15); /* Increased from 0.08 for better visibility */
+    font-weight: 950; /* Heavier for cinematic feel */
+    color: rgba(255, 255, 255, 0.12); 
     white-space: nowrap;
     pointer-events: none;
     text-transform: uppercase;
     z-index: 1;
+    /* Edge fading mask */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%);
 }
 
 .header-dot {
@@ -1498,23 +1524,23 @@ html {
     left: 5rem;
     width: 12px;
     height: 12px;
-    background: #fff;
+    background: var(--accent); /* Consistent accent use */
     border-radius: 50%;
     z-index: 5;
     opacity: 0.8;
 }
 
 .marquee-top {
-    top: 25%; /* Adjusted from 15% to keep it visible near the title */
+    top: 25%;
     transform: translateY(-50%);
-    animation: marquee-left 20s linear infinite; 
+    animation: marquee-left 15s linear infinite; /* Faster */
 }
 
 .marquee-bottom {
-    top: 75%; /* Adjusted from 85% to keep it tighter */
+    top: 75%;
     transform: translateY(-50%);
-    animation: marquee-right 25s linear infinite; 
-    opacity: 0.15; 
+    animation: marquee-right 18s linear infinite; /* Faster */
+    opacity: 0.08; 
 }
 
 @keyframes marquee-left {
