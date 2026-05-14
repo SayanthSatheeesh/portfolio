@@ -706,7 +706,7 @@ body {
 .marquee {
     display: flex;
     width: fit-content;
-    animation: scroll 60s linear infinite;
+    animation: scroll 40s linear infinite;
 }
 
 .marquee-wrapper:hover .marquee {
@@ -1507,13 +1507,13 @@ html {
 .marquee-top {
     top: 25%; /* Adjusted from 15% to keep it visible near the title */
     transform: translateY(-50%);
-    animation: marquee-left 30s linear infinite; 
+    animation: marquee-left 20s linear infinite; 
 }
 
 .marquee-bottom {
     top: 75%; /* Adjusted from 85% to keep it tighter */
     transform: translateY(-50%);
-    animation: marquee-right 35s linear infinite; 
+    animation: marquee-right 25s linear infinite; 
     opacity: 0.15; 
 }
 
