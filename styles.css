@@ -1508,7 +1508,7 @@ html {
     font-family: 'JetBrains Mono', monospace;
     font-size: clamp(6rem, 20vw, 15rem);
     font-weight: 950; /* Heavier for cinematic feel */
-    color: rgba(255, 255, 255, 0.12); 
+    color: rgba(255, 255, 255, 0.4); 
     white-space: nowrap;
     pointer-events: none;
     text-transform: uppercase;
@@ -1540,7 +1540,7 @@ html {
     top: 75%;
     transform: translateY(-50%);
     animation: marquee-right 18s linear infinite; /* Faster */
-    opacity: 0.08; 
+    opacity: 0.4; 
 }
 
 @keyframes marquee-left {
