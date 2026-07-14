@@ -258,6 +258,24 @@ body {
     transform: translateX(275px); 
 }
 
+/* --- Traveling Dot Indicator --- */
+.nav-dot {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent), 0 0 18px rgba(16, 185, 129, 0.5);
+    pointer-events: none;
+    /* GSAP drives translateX — CSS handles the look */
+    transform: translateX(0) translateX(-50%);
+    transition: box-shadow 0.3s ease;
+    z-index: 5;
+}
+
+
 /* Hamburger Menu */
 .hamburger {
     display: none;
