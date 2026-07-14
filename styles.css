@@ -1599,19 +1599,215 @@ html {
     background: rgba(255, 255, 255, 0.3);
 }
 
+    overflow: visible;
+}
+
+/* ── STAGE 1: Stroke Draw ─────────────────────────────────────────────── */
+.edu-draw-stroke {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 95px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    fill: transparent;
+    stroke: #00FFFF;          /* Starts Cyan */
+    stroke-width: 1px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    /* The core draw mechanism */
+    stroke-dasharray: 6000;
+    stroke-dashoffset: 6000;  /* Fully hidden at start */
+
+    /* No transition here — animation is applied via @keyframes on .is-drawing */
+}
+
+/* ── STAGE 2: Fill Bloom ──────────────────────────────────────────────── */
+.edu-draw-fill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 95px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    fill: transparent;         /* Hidden at start */
+    stroke: none;
+
+    /* Fill blooms in after stroke completes */
+    transition: fill 0.6s ease;
+}
+
+/* ── TRIGGERED STATE — applied via JS IntersectionObserver ────────────── */
+
+/* Draw the stroke left → right */
+.edu-draw-wrapper.is-drawing .edu-draw-stroke {
+    animation:
+        stroke-draw 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+        stroke-color-shift 1.8s ease forwards;
+}
+
+/* Fill blooms in 1.9s after draw starts — after stroke is complete */
+.edu-draw-wrapper.is-drawing .edu-draw-fill {
+    fill: #ffffff;
+    transition: fill 0.7s ease 1.9s;
+}
+
+/* ── KEYFRAMES ─────────────────────────────────────────────────────────── */
+
+/* The draw: dashoffset goes from 6000 → 0, revealing the stroke */
+@keyframes stroke-draw {
+    from { stroke-dashoffset: 6000; }
+    to   { stroke-dashoffset: 0; }
+}
+
+/* Color shifts from Cyan → White during the draw */
+@keyframes stroke-color-shift {
+    0%   { stroke: #00FFFF; stroke-width: 1.5px; }
+    50%  { stroke: #80FFFF; stroke-width: 1px; }
+    100% { stroke: #FFFFFF; stroke-width: 0.5px; }
+}
+
+/* ── SLICE WRAPPER (post-draw scroll physics) ──────────────────────────── */
+/* Overrides the inline display:none once draw is complete */
+.edu-intro-section.draw-complete .edu-slice-wrapper {
+    display: flex !important;
+}
+
+.edu-intro-section.draw-complete .edu-draw-wrapper {
+    display: none;
+}
+
+
+/* ==========================================================================
+   CINEMATIC PROJECT SECTION REDESIGN
+   ========================================================================== */
+
+.projects-section {
+    padding: 0;
+    background: #000000;
+}
+
+/* Project Header with Marquees */
+.project-header-v2 {
+    height: 100vh; /* Reduced from 150vh for better focus */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    z-index: 10; /* Adds a stacking order to stay on top of the next section */
+}
+
+.project-marquee-bg {
+    position: absolute;
+    width: 200%;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(6rem, 20vw, 15rem);
+    font-weight: 950; /* Heavier for cinematic feel */
+    color: rgba(255, 255, 255, 0.4); 
+    white-space: nowrap;
+    pointer-events: none;
+    text-transform: uppercase;
+    z-index: 1;
+    /* Edge fading mask */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%);
+}
+
+.header-dot {
+    position: absolute;
+    top: 5rem;
+    left: 5rem;
+    width: 12px;
+    height: 12px;
+    background: var(--accent); /* Consistent accent use */
+    border-radius: 50%;
+    z-index: 5;
+    opacity: 0.8;
+}
+
+.marquee-top {
+    top: 25%;
+    transform: translateY(-50%);
+    animation: marquee-left 15s linear infinite; /* Faster */
+}
+
+.marquee-bottom {
+    top: 75%;
+    transform: translateY(-50%);
+    animation: marquee-right 18s linear infinite; /* Faster */
+    opacity: 0.4; 
+}
+
+@keyframes marquee-left {
+    from { transform: translateY(-50%) translateX(0); }
+    to { transform: translateY(-50%) translateX(-50%); }
+}
+
+@keyframes marquee-right {
+    from { transform: translateY(-50%) translateX(-50%); }
+    to { transform: translateY(-50%) translateX(0); }
+}
+
+.project-title-v2 {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.title-top {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.8em;
+    display: block;
+    margin-bottom: 2rem;
+    opacity: 1;
+}
+
+.title-main {
+    font-size: clamp(4rem, 12vw, 14rem); /* Slightly reduced for better mobile/laptop fit */
+    font-weight: 950;
+    color: #fff;
+    line-height: 0.8;
+    letter-spacing: -0.06em;
+    margin-bottom: 2rem;
+}
+
+.title-explore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    opacity: 0.4;
+}
+
+.explore-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: #fff;
+}
+
+.explore-line {
+    width: 40px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
 /* Cinematic Project Cards */
 .cinematic-project-list {
     padding: 10vw 0;
 }
 
 .cine-card {
-    min-height: 90vh; /* Reduced from 120vh to fit laptop screens */
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 6vw;
     position: relative;
     margin-bottom: 20vh;
+    will-change: transform, opacity;
 }
 
 .cine-card:nth-child(even) {
@@ -1629,9 +1825,13 @@ html {
     width: 100%;
     aspect-ratio: 16 / 9;
     overflow: hidden;
-    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+    /* Default: fully visible. GSAP clip-path reveal fires on scroll.
+       On GitHub Pages / mobile the GSAP trigger may be delayed — starting
+       visible prevents a permanently-blank image block. */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    background: #0a0e0c; /* Dark Emerald fallback if image fails */
+    background: #0a0e0c;
+    will-change: clip-path;
 }
 
 .cine-card.is-visible .cine-image-wrapper {
@@ -1670,9 +1870,13 @@ html {
 /* Project Content */
 .cine-content {
     margin-top: 2rem;
-    opacity: 0;
-    transform: translateY(30px);
+    /* Removed opacity:0 default — GSAP handles entry. Prevents content being
+       permanently hidden when GSAP/ScrollTrigger fails to fire (slow networks,
+       GitHub Pages CDN cold-start, mobile low-power mode). */
+    opacity: 1;
+    transform: translateY(0);
     transition: all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+    will-change: opacity, transform;
 }
 
 .cine-card.is-visible .cine-content {
@@ -1745,5 +1949,179 @@ html {
     height: 20px;
 }
 
+/* ---------- SCROLL PROGRESS ---------- */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--accent);
+    z-index: 10001;
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+}
 
+/* ============================================================
+   MOBILE RESPONSIVE — ≤768px
+   ============================================================ */
+@media (max-width: 768px) {
 
+    /* Body */
+    body {
+        padding-top: 70px;
+    }
+
+    /* Navbar: shrink pill on mobile */
+    .navbar {
+        min-width: unset;
+        width: calc(100% - 2rem);
+        padding: 0.7rem 1.5rem;
+        top: 12px;
+    }
+
+    /* Hero */
+    .hero {
+        padding: 1.5rem;
+        align-items: flex-start;
+        padding-top: 4rem;
+    }
+
+    .hero-content {
+        text-align: center;
+    }
+
+    .hero-heading {
+        font-size: clamp(3rem, 15vw, 6rem);
+    }
+
+    .hero-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .hero-stats {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .hero-bg-text {
+        font-size: clamp(6rem, 40vw, 15rem);
+    }
+
+    /* Section titles */
+    .section-title {
+        font-size: clamp(2rem, 8vw, 3.5rem);
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    /* Skills bento */
+    .bento-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .bento-item {
+        padding: 1.5rem;
+    }
+
+    /* Projects header */
+    .project-header-v2 {
+        padding: 4rem 1.5rem 2rem;
+    }
+
+    .title-main {
+        font-size: clamp(3rem, 18vw, 8rem);
+    }
+
+    /* Cinematic project cards */
+    .cine-card {
+        min-height: unset;
+        padding: 2rem 1.25rem;
+        margin-bottom: 4rem;
+    }
+
+    /* Remove alternating alignment on mobile — all left-aligned */
+    .cine-card:nth-child(even) {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .cine-card:nth-child(even) .cine-meta {
+        justify-content: flex-start;
+    }
+
+    .cine-card:nth-child(even) .cine-desc {
+        margin-left: 0;
+    }
+
+    .cine-title {
+        font-size: clamp(2.2rem, 12vw, 4.5rem);
+    }
+
+    .cine-desc {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+
+    .cine-card-inner {
+        max-width: 100%;
+    }
+
+    .cinematic-project-list {
+        padding: 5vw 0;
+    }
+
+    /* Contact form */
+    .contact-form {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-form .full-width {
+        grid-column: 1;
+    }
+
+    /* Container padding */
+    .container {
+        padding: 0 1.25rem;
+    }
+
+    /* Scroll progress bar z-index stays high */
+    .scroll-progress {
+        z-index: 10002;
+    }
+}
+
+/* ============================================================
+   MOBILE RESPONSIVE — ≤480px (small phones)
+   ============================================================ */
+@media (max-width: 480px) {
+
+    .navbar {
+        width: calc(100% - 1.5rem);
+        padding: 0.6rem 1rem;
+    }
+
+    .hero-heading {
+        font-size: clamp(2.5rem, 18vw, 5rem);
+    }
+
+    .stat-number {
+        font-size: 1.8rem;
+    }
+
+    .cine-title {
+        font-size: clamp(2rem, 14vw, 3.5rem);
+    }
+
+    .bento-item {
+        padding: 1.25rem;
+    }
+
+    .send-btn {
+        width: 100%;
+        text-align: center;
+    }
+}

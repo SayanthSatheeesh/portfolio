@@ -33,6 +33,7 @@
         </div>
 
         <div class="noise-overlay"></div>
+        <div class="scroll-progress"></div>
         <nav class="navbar">
                 <div class="nav-container">
                         <div class="nav-links">
@@ -40,6 +41,7 @@
                                 <a href="#skills">Skills</a>
                                 <a href="#projects">Projects</a>
                                 <a href="#contact">Contact</a>
+                                <span class="nav-dot"></span>
                         </div>
                 </div>
         </nav>
@@ -79,13 +81,13 @@
                                                 </svg></a>
                                 </div>
                                 <div class="hero-stats">
-                                        <div class="stat-item"><span class="stat-number">3+</span><span
+                                        <div class="stat-item"><span class="stat-number">4+</span><span
                                                         class="stat-label">Years of
                                                         Exp</span></div>
                                         <div class="stat-item"><span class="stat-number">10+</span><span
                                                         class="stat-label">Projects</span>
                                         </div>
-                                        <div class="stat-item"><span class="stat-number">10K+</span><span
+                                        <div class="stat-item"><span class="stat-number">100+</span><span
                                                         class="stat-label">Hours
                                                         Coded</span></div>
                                 </div>
@@ -432,18 +434,18 @@
                                 // Project Card Clip-Path Reveals
                                 const cards = document.querySelectorAll('.cine-card');
                                 cards.forEach(card => {
+                                        // Animate the card in from below — content is already visible by default
                                         gsap.fromTo(card, 
-                                                { opacity: 0, y: 100 },
+                                                { opacity: 0, y: 80 },
                                                 {
                                                         opacity: 1,
                                                         y: 0,
-                                                        duration: 1.2,
-                                                        ease: "power4.out",
+                                                        duration: 1,
+                                                        ease: "power3.out",
                                                         scrollTrigger: {
                                                                 trigger: card,
-                                                                start: "top 90%",
-                                                                end: "bottom 10%",
-                                                                toggleActions: "play reverse play reverse",
+                                                                start: "top 88%",
+                                                                toggleActions: "play none none none",
                                                                 toggleClass: "is-visible"
                                                         }
                                                 }
@@ -514,6 +516,55 @@
                                         gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
                                 });
                         });
+
+                        // 6. Traveling Nav Dot
+                        (function() {
+                                const navLinks = document.querySelectorAll('.nav-links a');
+                                const dot = document.querySelector('.nav-dot');
+                                const sections = ['home', 'skills', 'projects', 'contact'];
+                                let activeIndex = 0;
+
+                                function moveDotToLink(link) {
+                                        const linkRect = link.getBoundingClientRect();
+                                        const navRect = link.closest('.nav-links').getBoundingClientRect();
+                                        const targetX = linkRect.left - navRect.left + linkRect.width / 2;
+                                        gsap.to(dot, {
+                                                x: targetX,
+                                                duration: 0.5,
+                                                ease: 'power3.out'
+                                        });
+                                }
+
+                                function setActiveLink(index) {
+                                        if (index === activeIndex && navLinks[index].classList.contains('active')) return;
+                                        activeIndex = index;
+                                        navLinks.forEach(l => l.classList.remove('active'));
+                                        navLinks[index].classList.add('active');
+                                        moveDotToLink(navLinks[index]);
+                                }
+
+                                // Init dot position
+                                requestAnimationFrame(() => moveDotToLink(navLinks[0]));
+
+                                // Scroll detection via ScrollTrigger
+                                sections.forEach((id, i) => {
+                                        const el = document.getElementById(id);
+                                        if (!el) return;
+                                        ScrollTrigger.create({
+                                                trigger: el,
+                                                start: 'top center',
+                                                end: 'bottom center',
+                                                onEnter: () => setActiveLink(i),
+                                                onEnterBack: () => setActiveLink(i)
+                                        });
+                                });
+
+                                // Hover: temporarily move dot, restore on leave
+                                navLinks.forEach((link, i) => {
+                                        link.addEventListener('mouseenter', () => moveDotToLink(link));
+                                        link.addEventListener('mouseleave', () => moveDotToLink(navLinks[activeIndex]));
+                                });
+                        })();
                 })();
         </script>
 </body>
