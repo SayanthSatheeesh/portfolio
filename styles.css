@@ -622,13 +622,28 @@ body {
     transition: transform 0.3s;
 }
 
-.social-btn:hover {
-    transform: scale(1.3) rotate(5deg);
+/* Normalize individual icon visual sizes */
+.social-btn.github svg {
+    transform: scale(0.95);
 }
 
-.social-btn:hover svg {
-    transform: scale(1.1) rotate(-5deg);
+.social-btn.linkedin svg {
+    transform: scale(1.1);
 }
+
+.social-btn.instagram svg {
+    transform: scale(1);
+}
+
+/* Base button hover */
+.social-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Hover scales SVG back up slightly without conflicting transforms */
+.social-btn.github:hover svg { transform: scale(1.05); }
+.social-btn.linkedin:hover svg { transform: scale(1.2); }
+.social-btn.instagram:hover svg { transform: scale(1.1); }
 
 .social-btn.github {
     color: #fff;
